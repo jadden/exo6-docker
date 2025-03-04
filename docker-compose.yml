@@ -1,0 +1,27 @@
+services:
+  apache:
+    build: ./apache
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    networks:
+      - secure_net
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - secure_net
+
+networks:
+  secure_net:
+    driver: bridge
+    driver_opts:
+      encrypted: "true"
