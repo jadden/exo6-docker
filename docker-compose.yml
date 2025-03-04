@@ -9,6 +9,7 @@ services:
       - mysql
     networks:
       - secure_net
+    command: ["wait-for-it.sh"]
 
   mysql:
     image: mysql:8.0
